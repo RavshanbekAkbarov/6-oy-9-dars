@@ -5,7 +5,8 @@ import { useContext } from "react";
 import { GlobalContext } from "../context/globalContext";
 
 function Navbar() {
-  const { color, selectedProducts } = useContext(GlobalContext);
+  const { color, selectedProducts, totalAmount, totalPrise } =
+    useContext(GlobalContext);
   return (
     <header className="mb-5 bg-base-200" style={{ backgroundColor: color }}>
       <div className="align-elements navbar">
@@ -71,8 +72,8 @@ function Navbar() {
                 className="card dropdown-content card-compact z-[1] mt-3 w-52 bg-base-100 shadow"
               >
                 <div className="card-body">
-                  <span className="text-lg font-bold">8 Items</span>
-                  <span className="text-info">Subtotal: $999</span>
+                  <span className="text-lg font-bold">{totalAmount} Items</span>
+                  <span className="text-info">Subtotal: ${totalPrise}</span>
                   <div className="card-actions">
                     <button className="btn btn-primary btn-block">
                       View cart

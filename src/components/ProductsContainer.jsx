@@ -4,17 +4,17 @@ import { GlobalContext } from "../context/globalContext";
 import { toast } from "react-toastify";
 
 function ProductsContainer() {
-  const { dispatch, selectedProducts } = useContext(GlobalContext);
+  const { addProduct, selectedProducts } = useContext(GlobalContext);
   const { products } = useLoaderData();
 
   const buyProduct = (e, prod) => {
     e.preventDefault();
-    const product = selectedProducts.find((prod) => prod.id == prod.id);
+    const product = selectedProducts.find((p) => p.id == prod.id);
     if (product) {
-      toast.success("  Already, added  !");
+      toast.warn("  Already, added  !");
       return;
     }
-    dispatch({ type: "ADD_PRODUCT", payload: prod });
+    addProduct({ ...prod, amount: 1 });
   };
   return (
     <div className="grid gap-5 md:grid-cols-3">
