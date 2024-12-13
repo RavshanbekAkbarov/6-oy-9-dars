@@ -75,9 +75,9 @@ function Navbar() {
                   <span className="text-lg font-bold">{totalAmount} Items</span>
                   <span className="text-info">Subtotal: ${totalPrise}</span>
                   <div className="card-actions">
-                    <button className="btn btn-primary btn-block">
-                      View cart
-                    </button>
+                    <Link to="/cart" className="btn btn-primary btn-block">
+                      Veiw Cart
+                    </Link>
                   </div>
                 </div>
               </div>
