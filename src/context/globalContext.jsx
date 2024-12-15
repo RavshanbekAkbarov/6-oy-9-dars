@@ -1,4 +1,5 @@
 import { createContext, useEffect, useReducer } from "react";
+import { formatPrice } from "../utils";
 
 export const GlobalContext = createContext();
 
@@ -15,11 +16,16 @@ const changeState = (state, action) => {
         ...state,
         selectedProducts: payload,
       };
+    case "CHANGE_AMOUNT":
+      return {
+        ...state,
+        selectedProducts: payload,
+      };
     case "CALCULATE":
       return {
         ...state,
         totalAmount: payload[1],
-        totalPrise: payload[0],
+        totalPrice: payload[0],
       };
 
     case "CHANGE_COLOR":
@@ -31,22 +37,24 @@ export function GlobalContextProvider({ children }) {
   const [state, dispatch] = useReducer(changeState, {
     color: "",
     selectedProducts: [],
-    totalPrise: 0,
+    totalPrice: 0,
     totalAmount: 0,
   });
 
   const calculate = () => {
-    let allPrise = 0;
+    let allPrice = 0;
     let allAmount = 0;
 
     if (state.selectedProducts.length) {
       state.selectedProducts.forEach((product) => {
-        allPrise += product.price * product.amount;
+        allPrice += product.price * product.amount;
         allAmount += product.amount;
       });
     }
-dispatch({type:"CALCULATE",payload:[allPrise,allAmount]})
-
+    dispatch({
+      type: "CALCULATE",
+      payload: [formatPrice(allPrice), allAmount],
+    });
   };
 
   const addProduct = (product) => {
@@ -58,7 +66,30 @@ dispatch({type:"CALCULATE",payload:[allPrise,allAmount]})
       (product) => product.id !== id,
     );
     dispatch({ type: "REMOVE_PRODUCT", payload: filterProducts });
-    calculate();
+  };
+
+  //increase amount
+  const changeAmount = (id, ty) => {
+    if (ty == "increase") {
+      const changedProducts = state.selectedProducts.map((prod) => {
+        if (prod.id == id) {
+          return { ...prod, amount: prod.amount + 1 };
+        } else {
+          return prod;
+        }
+      });
+
+      dispatch({ type: "CHANGE_AMOUNT", payload: changedProducts });
+    } else {
+      const changedProducts = state.selectedProducts.map((prod) => {
+        if (prod.id == id) {
+          return { ...prod, amount: prod.amount - 1 };
+        } else {
+          return prod;
+        }
+      });
+      dispatch({ type: "CHANGE_AMOUNT", payload: changedProducts });
+    }
   };
 
   useEffect(() => {
@@ -67,7 +98,7 @@ dispatch({type:"CALCULATE",payload:[allPrise,allAmount]})
 
   return (
     <GlobalContext.Provider
-      value={{ ...state, dispatch, removeProduct, addProduct }}
+      value={{ ...state, dispatch, removeProduct, addProduct, changeAmount }}
     >
       {children}
     </GlobalContext.Provider>

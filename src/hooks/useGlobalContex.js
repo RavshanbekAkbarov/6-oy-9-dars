@@ -1,5 +1,4 @@
-import React from 'react'
-
+import { GlobalContext } from "../context/globalContext"
 function useGlobalContex() {
   return (
     <div>useGlobalContex</div>
