@@ -25,12 +25,12 @@ import { loader as SingleProductLoader } from "./pages/SingleProduct";
 import { ProtectedRoutes } from "./components";
 
 function App() {
-  const user = true;
+  const user = false;
   const routes = createBrowserRouter([
     {
       path: "/",
       element: (
-        <ProtectedRoutes user="user">
+        <ProtectedRoutes user={user}>
           <MainLayout />
         </ProtectedRoutes>
       ),
@@ -61,11 +61,11 @@ function App() {
       ],
     },
     {
-      path: "login",
+      path: "/login",
       element: user ? <Navigate to="/" /> : <Login />,
     },
     {
-      path: "register",
+      path: "/register",
       element: user ? <Navigate to="/" /> : <Register />,
     },
   ]);

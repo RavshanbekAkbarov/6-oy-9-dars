@@ -4,12 +4,12 @@ import { Navbar, Footer, ColorContainer } from "../components";
 function MainLayout() {
   return (
     <div>
-      <Navbar className="flex min-h-screen flex-col" />
+      <Navbar className="fixed top-0 z-10 w-full" />
       <ColorContainer />
       <main className="align-elements w-full flex-grow">
         <Outlet />
       </main>
-      <Footer />
+      <Footer className="fixed bottom-0 z-10 w-full" />
     </div>
   );
 }

@@ -6,6 +6,8 @@ export const GlobalContext = createContext();
 const changeState = (state, action) => {
   const { type, payload } = action;
   switch (type) {
+    case "LOGIN":
+      return { ...state, user: payload };
     case "ADD_PRODUCT":
       return {
         ...state,
@@ -27,14 +29,17 @@ const changeState = (state, action) => {
         totalAmount: payload[1],
         totalPrice: payload[0],
       };
-
     case "CHANGE_COLOR":
       return { ...state, color: payload };
+    default: {
+      return state;
+    }
   }
 };
 
 export function GlobalContextProvider({ children }) {
   const [state, dispatch] = useReducer(changeState, {
+    user: null,
     color: "",
     selectedProducts: [],
     totalPrice: 0,
