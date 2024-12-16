@@ -24,8 +24,12 @@ import { loader as HomeLoader } from "./pages/Home";
 import { loader as SingleProductLoader } from "./pages/SingleProduct";
 import { ProtectedRoutes } from "./components";
 
+//globalContext
+import { useContext } from "react";
+import { GlobalContext } from "./context/globalContext";
+
 function App() {
-  const user = false;
+  const { user } = useContext(GlobalContext);
   const routes = createBrowserRouter([
     {
       path: "/",

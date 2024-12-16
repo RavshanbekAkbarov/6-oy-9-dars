@@ -11,10 +11,11 @@ export const useSignup = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        dispatch({ type: "Login", payload: user });
+        navigate("/home");
       })
       .catch((error) => {
-        const errorCode = error.code;
+        const errorMessage = error.message;
         toast.error(errorMessage);
       });
   };

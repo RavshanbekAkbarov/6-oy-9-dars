@@ -1,5 +1,7 @@
 import { createContext, useEffect, useReducer } from "react";
 import { formatPrice } from "../utils";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase/firebaseConfid";
 
 export const GlobalContext = createContext();
 
@@ -96,6 +98,12 @@ export function GlobalContextProvider({ children }) {
       dispatch({ type: "CHANGE_AMOUNT", payload: changedProducts });
     }
   };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      dispatch({ type: "LOGIN", payload: user });
+    });
+  }, []);
 
   useEffect(() => {
     calculate();
