@@ -10,6 +10,9 @@ const changeState = (state, action) => {
   switch (type) {
     case "LOGIN":
       return { ...state, user: payload };
+    case "AUTH_READY":
+      return { ...state, authReady: true };
+
     case "ADD_PRODUCT":
       return {
         ...state,
@@ -46,6 +49,7 @@ export function GlobalContextProvider({ children }) {
     selectedProducts: [],
     totalPrice: 0,
     totalAmount: 0,
+    authReady: false,
   });
 
   const calculate = () => {
@@ -102,6 +106,7 @@ export function GlobalContextProvider({ children }) {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       dispatch({ type: "LOGIN", payload: user });
+      dispatch({ type: "AUTH_READY" });
     });
   }, []);
 

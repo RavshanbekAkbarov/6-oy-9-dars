@@ -10,7 +10,6 @@ export const useSignup = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then((result) => {
-        const user = result.user;
         dispatch({ type: "Login", payload: user });
         navigate("/home");
       })

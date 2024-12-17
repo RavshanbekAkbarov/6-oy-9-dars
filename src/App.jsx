@@ -29,7 +29,7 @@ import { useContext } from "react";
 import { GlobalContext } from "./context/globalContext";
 
 function App() {
-  const { user } = useContext(GlobalContext);
+  const { user, authReady } = useContext(GlobalContext);
   const routes = createBrowserRouter([
     {
       path: "/",
@@ -74,7 +74,7 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={routes} />;
+  return <>{authReady && <RouterProvider router={routes} />}</>;
 }
 
 export default App;
